@@ -1,0 +1,14 @@
+---
+:id: 42650431
+:submitters:
+- :name: Curtis Spears
+  :email: cspears@ucsd.edu
+- :name: Yueqi Liao
+  :email: yliao@ucsd.edu
+:created_at: !ruby/object:ActiveSupport::TimeWithZone
+  utc: 2020-09-05 05:27:59.454650000 Z
+  zone: !ruby/object:ActiveSupport::TimeZone
+    name: America/Los_Angeles
+  time: 2020-09-04 22:27:59.454650000 Z
+:status: processed
+:score: 120.0

@@ -1,0 +1,15 @@
+
+.question {
+  font-size: 40px;
+  font-family: Arial, Helvetica;
+  margin: auto;
+  width: 60%;
+  border: 10px solid wheat;
+  padding: 10px;
+}
+
+p{
+  font-family: Georgia, Times, 'Times New Roman', serif;
+  margin: auto;
+  width: 80%;
+}
