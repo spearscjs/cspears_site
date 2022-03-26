@@ -1,42 +1,4 @@
 
-**************************************************************************************************************
-
-Login Info
-
-**************************************************************************************************************
-
-site: 		cspears.site	
-
-username: 	grader
-password: 	H@ve_MercY
-
-* The ssh password and username is the same.
-
-
-
-**************************************************************************************************************
-
-Collector.js additions
-
-**************************************************************************************************************
-
-- added a timestamp (hour of day) to the initalBrowserData for dataviz. Since a lot of my data didn't log 
-correctly for other metrics. 
-
-
-
-**************************************************************************************************************
-
-Grader Info
-
-**************************************************************************************************************
-- if you go to my cspears.site/api page, it gives links to all the different metric GET pages
-- id, data, vitalScore, ip are the only columns in the tables
-
-
-
-
-
 
 HTTP REQUESTS *****************************************************
 
