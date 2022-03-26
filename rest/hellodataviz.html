@@ -1,0 +1,270 @@
+
+
+<!DOCTYPE html>
+<html>
+    
+<head>
+    <meta charset="utf-8">
+    <title>Data Viz</title>
+    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+    <style>
+    html,
+    body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .chart-parent--container {
+        display: flex;
+    }
+    
+    .chart--container {
+        height: 100%;
+        width: 100%;
+        min-height: 400px;
+    }
+    
+    .zc-ref {
+        display: none;
+    }
+    </style>
+</head>
+    
+<body>
+
+    <!-- CHART CONTAINER*********************************************************************************************************************** -->
+    <div class="chart-parent--container">
+
+    <div id="myChart" class="chart--container">
+        <a class="zc-ref" href="https://www.zingchart.com"></a>
+    </div>
+
+    <div id="myChart1" class="chart--container">
+        <a class="zc-ref" href="https://www.zingchart.com"></a>
+    </div>
+
+    <div id="myChart2" class="chart--container">
+        <a class="zc-ref" href="https://www.zingchart.com"></a>
+    </div>
+    </div>
+
+
+
+
+
+    <script>
+    ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "b55b025e438fa8a98e32482b5f768ff5"]; // window:load event for Javascript to run after HTML
+    // because this Javascript is injected into the document head
+
+    // GET DATA **************************************************************
+
+
+
+    window.addEventListener('load', () => {
+        // Javascript code to execute after DOM content
+        
+    fetch('/api/vizData')
+        .then(response => response.json())
+        .then(data => { 
+            console.log(data);
+        
+        
+        
+        
+        // BAR CHART ***************************************************************************************************************************
+        const barConfig = {
+            type: 'bar',
+            globals: {
+                fontSize: 14
+            },
+            title: {
+                text: 'Cookie Chart',
+                fontSize: 24,
+            },
+            legend: {
+                draggable: true,
+            },
+            scaleX: {
+                // set scale label
+                label: {
+                    text: 'Cookie Settings by Time (Military Time)'
+                },
+                // convert text on scale indices
+                labels: ['0-7 hr', '8-15 hr', '16-23 hr']
+            },
+            scaleY: {
+                // scale label with unicode character
+                label: {
+                 text: 'Number of Users'
+                }
+            },
+            // plot represents general series, or plots, styling
+            plot: {
+                valueBox: {
+                placement: 'top-in',
+                color: '#fff',
+                },
+                // hoverstate
+                tooltip: {
+                // turn individual point tooltip off
+                // visible: false,
+                padding: '10 15',
+                borderRadius: 3,
+                // % symbol represents a token to insert a value. Full list here:
+                // https://www.zingchart.com/docs/tutorials/chart-elements/zingchart-tokens/
+                text: '%plot-text %kl was %v users',
+                // htmlMode renders text attribute as html so
+                // &deg; is rendered
+                htmlMode: true,
+                },
+                // animation docs here:
+                // https://www.zingchart.com/docs/tutorials/design-and-styling/chart-animation/#animation__effect
+                animation: {
+                    effect: 'ANIMATION_EXPAND_BOTTOM',
+                    method: 'ANIMATION_STRONG_EASE_OUT',
+                    sequence: 'ANIMATION_BY_NODE',
+                    speed: 275,
+                }
+            },
+            series: [
+                // plot values
+                { values: data.cookiesOnByScale, text: "Enabled"},
+                { values: data.cookiesOffByScale, text: "Disabled"},
+            ]
+        };
+
+
+        // pie chart *********************************************************************************************************************
+        const pieConfig = {
+            type: 'pie',
+            theme: 'dark',
+            globals: {
+                fontSize: 14
+            },
+            title: {
+                text: 'Pie Chart',
+                fontSize: 24,
+                // will force margin and padding on title
+                // adjustLayout: true
+            },
+            legend: {
+                draggable: true,
+                // will force margin and padding on legen d
+                // adjustLayout: true
+            },
+            scaleR: {},
+            // plot represents general series, or plots, styling
+            plot: {
+                // hoverstate
+                tooltip: {
+                // turn individual point tooltip off
+                // visible: false,
+                padding: '10 15',
+                borderRadius: 3,
+                // % symbol represents a token to insert a value. Full list here:
+                // https://www.zingchart.com/docs/tutorials/chart-elements/zingchart-tokens/
+                text: '%plot-text %kl was %v users',
+                // htmlMode renders text attribute as html so
+                // &deg; is rendered
+                htmlMode: true,
+                },
+                // animation docs here:
+                // https://www.zingchart.com/docs/tutorials/design-and-styling/chart-animation/#animation__effect
+                animation: {
+                    effect: 'ANIMATION_EXPAND_BOTTOM',
+                    method: 'ANIMATION_STRONG_EASE_OUT',
+                    sequence: 'ANIMATION_BY_PLOT',
+                    speed: 275,
+                }
+            },
+            series: [{
+                // plot values
+                    values: [data.cookieOn],
+                    backgroundColor: '#ff4081',
+                    text: 'Cookies Enabled',
+                },
+                {
+                // plot values
+                    values: [data.cookieOff],
+                    backgroundColor: '#7c4dff',
+                    text: 'Cookies Disabled'
+                }
+            ]
+        };
+
+
+        // LINE CHART ******************************************************************************************************************
+        var lineConfig = {
+            "type": "line",
+            title: {
+                "text": "Cookies Enabled (By Military Time)",
+            },
+            "legend" : {
+                draggable: true,
+            },
+            "plot": {
+                "aspect": "segmented"
+            },
+            "scale-x" : {
+                ticks: {
+                    stepSize: .25
+                },
+                label: {
+                    text: 'Cookie Settings By Time (Military Time)'
+                }
+            },
+            "scale-y" : {
+                label: {
+                    text: 'Number of Users'
+                }
+            },
+            "series": [
+                {
+                  "values": data.totalUsersByTime,
+                  "text" : "Total Users"
+                },
+                {
+                  "values": data.cookiesOffByTime,
+                  "text" : "Cookies Disabled"
+                },
+                {
+                  "values": data.cookiesOnByTime, 
+                  "text" : "Cookies Enabled"
+                }, 
+            
+            ]
+        };
+
+    
+        // render chart with width and height to
+        // fill the parent container CSS dimensions
+        zingchart.render({
+            id: 'myChart',
+            data: barConfig,
+            height: '100%',
+            width: '100%'
+        });
+
+        zingchart.render({
+            id: 'myChart1',
+            data: pieConfig,
+            height: '100%',
+            width: '100%'
+        });
+
+        zingchart.render({
+            id: 'myChart2',
+            data: lineConfig,
+            height: '100%',
+            width: '100%'
+        });
+
+    });
+        });
+    </script>
+</body>
+    
+</html>
+
